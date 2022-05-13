@@ -20,7 +20,7 @@ The high level overview of how to compute a keccak256 hash in StarkNet is the fo
 
 ### Step 2
 
-- When done, call `finalize_keccak` to verify the soundness of the execution. Here we pass the bounds of the `keccak_ptr` array. The function will extract the data to be hashed from this array, compute the hash, and check that it matches the hash stored in the array.
+- When done, call `finalize_keccak` to verify the soundness of the execution. Here we pass the bounds of the `keccak_ptr` array. The function will extract the data to be hashed from this array, compute the hash, and check that it matches the hash stored in the array. This makes the whole process sound.
 
 ## Why this design?
 
