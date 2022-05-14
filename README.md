@@ -4,7 +4,9 @@ Example of how the keccak256 hash can be used within a StarkNet contract. This i
 
 Additionally, I try to provide an explanation of why the hash is meant to be used the way it is, without getting too much into technicalities.
 
-**NOTE:** Most likely there are and will be other updates that follow a similar design pattern
+**NOTE 1:** Most likely there are and will be other updates that follow a similar design pattern
+
+**NOTE 2:** Any feedback is extremely welcome!
 
 The high level overview of how to compute a keccak256 hash in StarkNet is the following:
 
@@ -28,6 +30,6 @@ The keccak functions `keccak`, `keccak_felts`, etc. are basically computing the 
 
 On the other hand, `finalize_keccak` is a function that computes the keccak hash natively within Cairo, and verifies that the keccak computed previously is the expected hash. This makes Step 1 + Step 2 a sound process.
 
-The question is: why not just compute the hashes natively in the first place, and forget about the hints? The reason is the following:  while executing `keccak`, `keccak_felts`, etc. these functions store different intermediate 64 bit words into the array `keccak_ptr`. Moreover, instead of using one felt per word, the functions store 3 words in each felt (since a felt is 251 bits long). Later, this is used by `finalize_keccak` to compute the hash of 3 chunks of data at once, instead of 1. 
+The question is: why not just compute the hashes natively in the first place, and forget about the hints? The reason is the following: while executing `keccak`, `keccak_felts`, etc. these functions store different intermediate 64 bit words into the array `keccak_ptr`. Moreover, instead of using one felt per word, the functions store 3 words in each felt (since a felt is 251 bits long). Later, this is used by `finalize_keccak` to compute the hash of 3 chunks of data at once, instead of 1.
 
-**I am not sure of the following (currently in conversation with the StarkWare people to find out)** Moreover, the different words stored in one felt do not correspond to the same "timeline": More precisely, if one calls `keccak(very_long_message)` and then calls `finalize_keccak`, then `finalize_keccak` verifies the hashes of `chunk1_of_very_long_message`, `chunk2_of_very_long_message`, and `chunk3_of_very_long_message` in parallel
+**I am not sure of the following (currently in conversation with the StarkWare people to find out)** Moreover, the different words stored in one felt do not correspond to the same "timeline": More precisely, if one calls `keccak(very_long_message)` and then calls `finalize_keccak`, then `finalize_keccak` verifies the hashes of `chunk1_of_very_long_message`, `chunk2_of_very_long_message`, and `chunk3_of_very_long_message` in parallel.

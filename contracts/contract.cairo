@@ -4,6 +4,7 @@
 from starkware.cairo.common.cairo_builtins import HashBuiltin, BitwiseBuiltin
 from starkware.cairo.common.alloc import alloc
 from starkware.cairo.common.uint256 import Uint256
+from starkware.cairo.common.math_cmp import is_nn
 # New library from v0.8.2
 from starkware.cairo.common.cairo_keccak.keccak import keccak_felts, finalize_keccak
 
@@ -29,3 +30,4 @@ func hash{
 
     return (res)
 end
+
