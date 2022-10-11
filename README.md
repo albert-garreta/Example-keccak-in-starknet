@@ -32,6 +32,6 @@ On the other hand, `finalize_keccak` is a function that computes the keccak hash
 
 The question is: why not just compute the hashes natively in the first place, and forget about the hints? The reason is the following: while executing `keccak`, `keccak_felts`, etc. these functions store different intermediate 64 bit words into the array `keccak_ptr`. Moreover, instead of using one felt per word, the functions store 3 words in each felt (since a felt is 251 bits long). Later, this is used by `finalize_keccak` to compute the hash of 3 chunks of data at once, instead of 1.
 
-**I am not sure of the following (currently in conversation with the StarkWare people to find out)** Moreover, the different words stored in one felt do not correspond to the same "timeline": More precisely, if one calls `keccak(very_long_message)` and then calls `finalize_keccak`, then `finalize_keccak` verifies the hashes of `chunk1_of_very_long_message`, `chunk2_of_very_long_message`, and `chunk3_of_very_long_message` in parallel.
+**Not sure of the following** Moreover, the different words stored in one felt do not correspond to the same "timeline": More precisely, if one calls `keccak(very_long_message)` and then calls `finalize_keccak`, then `finalize_keccak` verifies the hashes of `chunk1_of_very_long_message`, `chunk2_of_very_long_message`, and `chunk3_of_very_long_message` in parallel.
 
 
